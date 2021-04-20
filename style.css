@@ -89,6 +89,25 @@ body {
   color: #ffffff;
 }
 
+.in-section {
+  position: relative;
+  background-color: #ffffff;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  color: rgba(198, 198, 198, 1);
+  outline: none;
+  width: 50px;
+  height: 28px;
+  border: solid #e5e5e5 1px;
+}
+
+.in-section:hover {
+  background-color: rgba(131, 58, 224, 1);
+  color: #ffffff;
+}
+
 .drop {
   color: rgba(198, 198, 198, 1);
   outline: none;
@@ -171,7 +190,11 @@ p {
   outline: none;
 }
 
-.currency-value{
+.from-currency-value{
+  margin-top: 20px;
+  margin-left: 16px;
+}
+.to-currency-value{
   margin-top: 20px;
   margin-left: 16px;
 }
