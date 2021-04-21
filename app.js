@@ -34,13 +34,15 @@ function returnFromButtonValue() {
     let btn = document.querySelectorAll('.ih-section');
     let timeoutId;
 
-    selectFrom.addEventListener('change', (event) => {      
+    selectFrom.addEventListener('change', (event) => { 
+// Замена цвета кнопок
         btn.forEach((el) => {
             el.style.color = "#C6C6C6";
             el.style.backgroundColor = "#FFFF"
         })
         selectFrom.style.backgroundColor = "#833AE0"
         selectFrom.style.color = "#FFFF";
+// Замена цвета кнопок
         from = event.target.value
         console.log(from)
         returnValueFromAPI()
@@ -55,6 +57,7 @@ function returnFromButtonValue() {
 
     btn.forEach((item) => {
         item.addEventListener('click', () => {
+// Замена цвета кнопок           
             btn.forEach((el) => {
                 el.style.color = "#C6C6C6";
                 el.style.backgroundColor = "#FFFF"
@@ -63,6 +66,7 @@ function returnFromButtonValue() {
             selectFrom.style.color = "#C6C6C6"  
             item.style.backgroundColor = "#833AE0";
             item.style.color = "#FFFF";
+// Замена цвета кнопок
             from = item.innerText
             console.log(from)
             returnValueFromAPI()
@@ -88,7 +92,7 @@ function returnFromButtonValue() {
                         inputToValue.value = inputFromValue.value * data.data.toFixed(4);
                         console.log(inputFromValue.value);
                     })
-            }, 2000)
+            }, 1000)
         }
     })
 
@@ -97,15 +101,18 @@ function returnFromButtonValue() {
 function returnToButtonValue() {
 
     let btn = document.querySelectorAll('.in-section');
-    let selectFrom = document.querySelector('.drop-to')
+    let selectFrom = document.querySelector('.drop-to');
+    let  timeoutId;
 
     selectFrom.addEventListener('change', (event) => {
+// Замена цвета кнопок        
         btn.forEach((el) => {
             el.style.color = "#C6C6C6";
             el.style.backgroundColor = "#FFFF"
         })
         selectFrom.style.backgroundColor = "#833AE0"
         selectFrom.style.color = "#FFFF";
+// Замена цвета кнопок
         to = event.target.value
         console.log(to)
         returnValueFromAPI()
@@ -119,6 +126,7 @@ function returnToButtonValue() {
 
     btn.forEach((item) => {
         item.addEventListener('click', () => {
+// Замена цвета кнопок
             btn.forEach((el) => {
                 el.style.color = "#C6C6C6";
                 el.style.backgroundColor = "#FFFF"
@@ -127,6 +135,7 @@ function returnToButtonValue() {
             selectFrom.style.color = "#C6C6C6"  
             item.style.backgroundColor = "#833AE0";
             item.style.color = "#FFFF";
+// Замена цвета кнопок
             to = item.innerText
             console.log(to)
             returnValueFromAPI()
@@ -135,10 +144,31 @@ function returnToButtonValue() {
                     pInpuntFrom.innerText = ` 1 ${from} = ${data.data.toFixed(4)} ${to}`;
                     pInpuntTo.innerText = ` 1 ${to} = ${data.data2.toFixed(4)} ${from}`;
                     inputToValue.value = inputFromValue.value * data.data.toFixed(4);
-
                 })
         });
     })
+
+    inputToValue.addEventListener('keyup', checkInput)
+
+    function checkInput() {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            returnValueFromAPI()
+                .then((data) => {
+                    console.log(data);
+                    pInpuntFrom.innerText = ` 1 ${from} = ${data.data.toFixed(4)} ${to}`;
+                    pInpuntTo.innerText = ` 1 ${to} = ${data.data2.toFixed(4)} ${from}`;
+                    inputFromValue.value = inputToValue.value * data.data2.toFixed(4);
+                    console.log(inputFromValue.value);
+                })
+        }, 1000)
+    }
+
+
+
+
+
+
 };
 
 returnToButtonValue()
