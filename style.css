@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
 body {
-
   margin: 0 auto;
   width: 1152px;
 }
@@ -25,6 +24,7 @@ body {
   display: flex;
   list-style-type: none;
 }
+
 .header-li {
   margin: 17px 0 14px 25px;
 }
@@ -90,6 +90,7 @@ body {
 .first {
   border-radius: 3px 0 0 3px;
 }
+
 .last {
   border-radius: 0 3px 3px 0;
 }
@@ -156,7 +157,7 @@ body {
   line-height: 14px;
 }
 
-p {
+.label {
   font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -176,6 +177,7 @@ p {
 .select-container {
   display: flex;
 }
+
 .in-input-section {
   margin-top: 20px;
   width: 252px;
@@ -183,14 +185,16 @@ p {
   border: solid 1px #e5e5e5;
   border-radius: 3px;
 }
+
 .ih-input-section {
   width: 252px;
   height: 102px;
   border: solid 1px #e5e5e5;
   border-radius: 3px;
 }
+
 .ineed-input {
-  width: 167px;
+  width: 215px;
   height: 38px;
   margin-top: 11px;
   margin-left: 14px;
@@ -204,7 +208,7 @@ p {
 }
 
 .ihave-input {
-  width: 167px;
+  width: 215px;
   height: 38px;
   margin-top: 11px;
   margin-left: 14px;
@@ -232,6 +236,7 @@ p {
   margin-top: 20px;
   margin-left: 16px;
 }
+
 .to-currency-value {
   margin-top: 20px;
   margin-left: 16px;
