@@ -29,6 +29,10 @@ body {
   margin: 17px 0 14px 25px;
 }
 
+.header-li:hover {
+  color: black;
+}
+
 .logo {
   margin-top: 15px;
   margin-left: 100px;
@@ -67,8 +71,6 @@ body {
   display: flex;
   justify-content: unset;
   width: 248px;
-  border: solid #e5e5e5 1px;
-  border-radius: 3px;
 }
 
 .ih-section {
@@ -85,9 +87,24 @@ body {
   border: solid #e5e5e5 1px;
 }
 
-.ih-section:hover {
+.first {
+  border-radius: 3px 0 0 3px;
+}
+.last {
+  border-radius: 0 3px 3px 0;
+}
+
+.ih-section-fix {
+  font-family: "Roboto", sans-serif;
   background-color: rgba(131, 58, 224, 1);
   color: #ffffff;
+  outline: none;
+  width: 50px;
+  height: 28px;
+  border: solid #e5e5e5 1px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
 }
 
 .in-section {
@@ -104,9 +121,17 @@ body {
   border: solid #e5e5e5 1px;
 }
 
-.in-section:hover {
+.in-section-fix {
+  font-family: "Roboto", sans-serif;
   background-color: rgba(131, 58, 224, 1);
   color: #ffffff;
+  outline: none;
+  width: 50px;
+  height: 28px;
+  border: solid #e5e5e5 1px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
 }
 
 .drop-from {

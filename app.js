@@ -1,5 +1,4 @@
 
-let btn2 = document.querySelector('.in-section');
 let pInpuntFrom = document.querySelector('.from-currency-value');
 let pInpuntTo = document.querySelector('.to-currency-value');
 let inputFromValue = document.querySelector('.ihave-input');
@@ -35,7 +34,13 @@ function returnFromButtonValue() {
     let btn = document.querySelectorAll('.ih-section');
     let timeoutId;
 
-    selectFrom.addEventListener('change', (event) => {
+    selectFrom.addEventListener('change', (event) => {      
+        btn.forEach((el) => {
+            el.style.color = "#C6C6C6";
+            el.style.backgroundColor = "#FFFF"
+        })
+        selectFrom.style.backgroundColor = "#833AE0"
+        selectFrom.style.color = "#FFFF";
         from = event.target.value
         console.log(from)
         returnValueFromAPI()
@@ -50,6 +55,14 @@ function returnFromButtonValue() {
 
     btn.forEach((item) => {
         item.addEventListener('click', () => {
+            btn.forEach((el) => {
+                el.style.color = "#C6C6C6";
+                el.style.backgroundColor = "#FFFF"
+            })
+            selectFrom.style.backgroundColor = "#FFFFFF"
+            selectFrom.style.color = "#C6C6C6"  
+            item.style.backgroundColor = "#833AE0";
+            item.style.color = "#FFFF";
             from = item.innerText
             console.log(from)
             returnValueFromAPI()
@@ -63,19 +76,19 @@ function returnFromButtonValue() {
         });
 
         inputFromValue.addEventListener('keyup', checkInput)
- 
+
         function checkInput() {
-            clearTimeout(timeoutId);    
+            clearTimeout(timeoutId);
             timeoutId = setTimeout(() => {
                 returnValueFromAPI()
-                .then((data) => {
-                    console.log(data);
-                    pInpuntFrom.innerText = ` 1 ${from} = ${data.data.toFixed(4)} ${to}`;
-                    pInpuntTo.innerText = ` 1 ${to} = ${data.data2.toFixed(4)} ${from}`;
-                    inputToValue.value = inputFromValue.value * data.data.toFixed(4);
-                    console.log(inputFromValue.value);
-                })
-            }, 1000)
+                    .then((data) => {
+                        console.log(data);
+                        pInpuntFrom.innerText = ` 1 ${from} = ${data.data.toFixed(4)} ${to}`;
+                        pInpuntTo.innerText = ` 1 ${to} = ${data.data2.toFixed(4)} ${from}`;
+                        inputToValue.value = inputFromValue.value * data.data.toFixed(4);
+                        console.log(inputFromValue.value);
+                    })
+            }, 2000)
         }
     })
 
@@ -87,6 +100,12 @@ function returnToButtonValue() {
     let selectFrom = document.querySelector('.drop-to')
 
     selectFrom.addEventListener('change', (event) => {
+        btn.forEach((el) => {
+            el.style.color = "#C6C6C6";
+            el.style.backgroundColor = "#FFFF"
+        })
+        selectFrom.style.backgroundColor = "#833AE0"
+        selectFrom.style.color = "#FFFF";
         to = event.target.value
         console.log(to)
         returnValueFromAPI()
@@ -100,6 +119,14 @@ function returnToButtonValue() {
 
     btn.forEach((item) => {
         item.addEventListener('click', () => {
+            btn.forEach((el) => {
+                el.style.color = "#C6C6C6";
+                el.style.backgroundColor = "#FFFF"
+            })
+            selectFrom.style.backgroundColor = "#FFFFFF"
+            selectFrom.style.color = "#C6C6C6"  
+            item.style.backgroundColor = "#833AE0";
+            item.style.color = "#FFFF";
             to = item.innerText
             console.log(to)
             returnValueFromAPI()
