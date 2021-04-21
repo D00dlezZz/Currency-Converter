@@ -17,24 +17,26 @@ let to = 'USD';
 
 
 async function returnValueFromAPI() {
+   
+    let responseFrom = await fetch(`https://api.ratesapi.io/api/latest?symbols=${from}&base=${to}`);
+    let dataFrom = await responseFrom .json();
+    
+ 
+    let responseTo = await fetch(`https://api.ratesapi.io/api/latest?symbols=${to}&base=${from}`);
+    let dataTo = await responseTo.json();
 
-    let response2 = await fetch(`https://api.ratesapi.io/api/latest?symbols=${from}&base=${to}`);
-    let data2 = await response2.json();
-
-    let response = await fetch(`https://api.ratesapi.io/api/latest?symbols=${to}&base=${from}`);
-    let data = await response.json();
-    return { data: data.rates[to], data2: data2.rates[from] }
+    return { To: dataTo.rates[to], From: dataFrom.rates[from] }
 }
 
 returnValueFromAPI()
     .then((data) => {
         console.log(data);
-        pInpuntFrom.innerText = ` 1 ${from} = ${data.data.toFixed(4)} ${to}`;
-        pInpuntTo.innerText = ` 1 ${to} = ${data.data2.toFixed(4)} ${from}`;
+        pInpuntFrom.innerText = ` 1 ${from} = ${data.To.toFixed(4)} ${to}`;
+        pInpuntTo.innerText = ` 1 ${to} = ${data.From.toFixed(4)} ${from}`;
     })
 
-
-function setLeftCurr(curr) {
+/** Выделяем выбранную валюту левого столбца */
+async function setLeftCurr(curr) {
     console.log(curr)
     leftButtons.forEach((el) => {
         el.style.color = "#C6C6C6";
@@ -43,24 +45,24 @@ function setLeftCurr(curr) {
     selectFrom.style.backgroundColor = "#FFFFFF";
     selectFrom.style.color = "#C6C6C6";
 
-    let a = leftButtons.find((btn) => {
+    let buttonValue = leftButtons.find((btn) => {
         return btn.innerText === curr;
     });
-    if (a) {
-        a.style.backgroundColor = "#833AE0";
-        a.style.color = "#FFFFFF";
+    if (buttonValue ) {
+        buttonValue.style.backgroundColor = "#833AE0";
+        buttonValue.style.color = "#FFFFFF";
     } else {
         selectFrom.style.backgroundColor = "#833AE0";
         selectFrom.style.color = "#FFFFFF";
+
+        selectFrom.value = curr;
     }
     from = curr;
-    returnValueFromAPI()
-        .then((data) => {
+    let data = await returnValueFromAPI()
             console.log(data);
-            pInpuntFrom.innerText = ` 1 ${from} = ${data.data.toFixed(4)} ${to}`;
-            pInpuntTo.innerText = ` 1 ${to} = ${data.data2.toFixed(4)} ${from}`;
-            inputToValue.value = inputFromValue.value * data.data.toFixed(4);
-        })
+            pInpuntFrom.innerText = ` 1 ${from} = ${data.To.toFixed(4)} ${to}`;
+            pInpuntTo.innerText = ` 1 ${to} = ${data.From.toFixed(4)} ${from}`;
+            inputToValue.value = inputFromValue.value * data.To.toFixed(4);
 }
 
 
@@ -82,9 +84,9 @@ leftButtons.forEach((item) => {
             returnValueFromAPI()
                 .then((data) => {
                     console.log(data);
-                    pInpuntFrom.innerText = ` 1 ${from} = ${data.data.toFixed(4)} ${to}`;
-                    pInpuntTo.innerText = ` 1 ${to} = ${data.data2.toFixed(4)} ${from}`;
-                    inputToValue.value = inputFromValue.value * data.data.toFixed(4);
+                    pInpuntFrom.innerText = ` 1 ${from} = ${data.To.toFixed(4)} ${to}`;
+                    pInpuntTo.innerText = ` 1 ${to} = ${data.From.toFixed(4)} ${from}`;
+                    inputToValue.value = inputFromValue.value * data.To.toFixed(4);
                     console.log(inputFromValue.value);
                 })
         }, 1000)
@@ -94,7 +96,7 @@ leftButtons.forEach((item) => {
 
 /** Выделяем выбранную валюту правого столбца */
 
-function setRightCurr(curr) {
+async function setRightCurr(curr) {
     console.log(curr)
     rigthButtons.forEach((el) => {
         el.style.color = "#C6C6C6";
@@ -103,27 +105,29 @@ function setRightCurr(curr) {
     selectTo.style.backgroundColor = "#FFFFFF";
     selectTo.style.color = "#C6C6C6";
 
-    let a = rigthButtons.find((btn) => {
+    let buttonValue = rigthButtons.find((btn) => {
         return btn.innerText === curr;
     });
-    if (a) {
-        a.style.backgroundColor = "#833AE0";
-        a.style.color = "#FFFFFF";
+    if (buttonValue ) {
+        buttonValue.style.backgroundColor = "#833AE0";
+        buttonValue.style.color = "#FFFFFF";
     } else {
         selectTo.style.backgroundColor = "#833AE0";
         selectTo.style.color = "#FFFFFF";
+
+        selectTo.value = curr;
     }
     to = curr;
-    returnValueFromAPI()
-        .then((data) => {
+
+   let data = await returnValueFromAPI()
             console.log(data);
-            pInpuntFrom.innerText = ` 1 ${from} = ${data.data.toFixed(4)} ${to}`;
-            pInpuntTo.innerText = ` 1 ${to} = ${data.data2.toFixed(4)} ${from}`;
-            inputToValue.value = inputFromValue.value * data.data.toFixed(4);
-        })
+            pInpuntFrom.innerText = ` 1 ${from} = ${data.To.toFixed(4)} ${to}`;
+            pInpuntTo.innerText = ` 1 ${to} = ${data.From.toFixed(4)} ${from}`;
+            inputToValue.value = inputFromValue.value * data.To.toFixed(4);
 }
 
 selectTo.addEventListener('change', (event) => {
+    console.log('r ch')
     setRightCurr(event.target.value)
 });
 
@@ -141,15 +145,18 @@ function checkInput() {
         returnValueFromAPI()
             .then((data) => {
                 console.log(data);
-                pInpuntFrom.innerText = ` 1 ${from} = ${data.data.toFixed(4)} ${to}`;
-                pInpuntTo.innerText = ` 1 ${to} = ${data.data2.toFixed(4)} ${from}`;
-                inputFromValue.value = inputToValue.value * data.data2.toFixed(4);
-                console.log(inputFromValue.value);
+                pInpuntFrom.innerText = ` 1 ${from} = ${data.To.toFixed(4)} ${to}`;
+                pInpuntTo.innerText = ` 1 ${to} = ${data.From.toFixed(4)} ${from}`;
+                inputFromValue.value = inputToValue.value * data.From.toFixed(4);
             })
     }, 1000)
 }
 
-switchButton.addEventListener('click', () => {
-
-    console.log('hi')
+switchButton.addEventListener('click', async () => {
+    let localFrom = from;
+    let localTo = to;
+    await setRightCurr(localFrom);
+    console.log('done right');
+    await setLeftCurr(localTo);
+    console.log('done left');
 });
