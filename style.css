@@ -233,11 +233,23 @@ body {
 }
 
 .from-currency-value {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  color: #9f9f9f;
   margin-top: 20px;
   margin-left: 16px;
 }
 
 .to-currency-value {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  color: #9f9f9f;
   margin-top: 20px;
   margin-left: 16px;
 }
