@@ -3,7 +3,7 @@ let btn2 = document.querySelector('.in-section');
 let pInpuntFrom = document.querySelector('.from-currency-value');
 let pInpuntTo = document.querySelector('.to-currency-value');
 let inputFromValue = document.querySelector('.ihave-input');
-
+let inputToValue = document.querySelector('.ineed-input');
 
 
 inputFromValue.value = '1';
@@ -26,7 +26,6 @@ returnValueFromAPI()
         console.log(data);
         pInpuntFrom.innerText = ` 1 ${from} = ${data.data.toFixed(4)} ${to}`;
         pInpuntTo.innerText = ` 1 ${to} = ${data.data2.toFixed(4)} ${from}`;
-
     })
 
 
@@ -34,32 +33,53 @@ function returnFromButtonValue() {
 
     let selectFrom = document.querySelector('.drop-from')
     let btn = document.querySelectorAll('.ih-section');
+    let timeoutId;
 
-        selectFrom.addEventListener('change', (event) => {
-            from = event.target.value
-            console.log(from)
-            returnValueFromAPI()
+    selectFrom.addEventListener('change', (event) => {
+        from = event.target.value
+        console.log(from)
+        returnValueFromAPI()
             .then((data) => {
                 console.log(data);
                 pInpuntFrom.innerText = ` 1 ${from} = ${data.data.toFixed(4)} ${to}`;
                 pInpuntTo.innerText = ` 1 ${to} = ${data.data2.toFixed(4)} ${from}`;
+                inputToValue.value = inputFromValue.value * data.data.toFixed(4);
+                console.log(typeof (inputToValue.value))
             })
-        });
+    });
 
     btn.forEach((item) => {
         item.addEventListener('click', () => {
             from = item.innerText
             console.log(from)
             returnValueFromAPI()
-            .then((data) => {
-                console.log(data);
-                pInpuntFrom.innerText = ` 1 ${from} = ${data.data.toFixed(4)} ${to}`;
-                pInpuntTo.innerText = ` 1 ${to} = ${data.data2.toFixed(4)} ${from}`;
-            })
+                .then((data) => {
+                    console.log(data);
+                    pInpuntFrom.innerText = ` 1 ${from} = ${data.data.toFixed(4)} ${to}`;
+                    pInpuntTo.innerText = ` 1 ${to} = ${data.data2.toFixed(4)} ${from}`;
+                    inputToValue.value = inputFromValue.value * data.data.toFixed(4);
+                    console.log(inputFromValue.value);
+                })
         });
-    })
+
+        inputFromValue.addEventListener('keyup', checkInput)
  
-}; 
+        function checkInput() {
+            clearTimeout(timeoutId);    
+            timeoutId = setTimeout(() => {
+                returnValueFromAPI()
+                .then((data) => {
+                    console.log(data);
+                    pInpuntFrom.innerText = ` 1 ${from} = ${data.data.toFixed(4)} ${to}`;
+                    pInpuntTo.innerText = ` 1 ${to} = ${data.data2.toFixed(4)} ${from}`;
+                    inputToValue.value = inputFromValue.value * data.data.toFixed(4);
+                    console.log(inputFromValue.value);
+                })
+            }, 1000)
+        }
+    })
+
+};
 
 function returnToButtonValue() {
 
@@ -70,11 +90,12 @@ function returnToButtonValue() {
         to = event.target.value
         console.log(to)
         returnValueFromAPI()
-        .then((data) => {
-            console.log(data);
-            pInpuntFrom.innerText = ` 1 ${from} = ${data.data.toFixed(4)} ${to}`;
-            pInpuntTo.innerText = ` 1 ${to} = ${data.data2.toFixed(4)} ${from}`;
-        })
+            .then((data) => {
+                console.log(data);
+                pInpuntFrom.innerText = ` 1 ${from} = ${data.data.toFixed(4)} ${to}`;
+                pInpuntTo.innerText = ` 1 ${to} = ${data.data2.toFixed(4)} ${from}`;
+                inputToValue.value = inputFromValue.value * data.data.toFixed(4);
+            })
     });
 
     btn.forEach((item) => {
@@ -82,16 +103,18 @@ function returnToButtonValue() {
             to = item.innerText
             console.log(to)
             returnValueFromAPI()
-            .then((data) => {
-                console.log(data);
-                pInpuntFrom.innerText = ` 1 ${from} = ${data.data.toFixed(4)} ${to}`;
-                pInpuntTo.innerText = ` 1 ${to} = ${data.data2.toFixed(4)} ${from}`;
-        
-            })
+                .then((data) => {
+                    console.log(data);
+                    pInpuntFrom.innerText = ` 1 ${from} = ${data.data.toFixed(4)} ${to}`;
+                    pInpuntTo.innerText = ` 1 ${to} = ${data.data2.toFixed(4)} ${from}`;
+                    inputToValue.value = inputFromValue.value * data.data.toFixed(4);
+
+                })
         });
     })
 };
 
 returnToButtonValue()
 returnFromButtonValue()
+
 
