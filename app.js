@@ -15,7 +15,7 @@ inputFromValue.value = '1';
 let from = 'RUB';
 let to = 'USD';
 
-
+// Обращение к API и получение изначальных FROM and TO и возвращает объект
 async function returnValueFromAPI() {
         if (from === to) {
             return { From: 1, To: 1 }
@@ -23,7 +23,7 @@ async function returnValueFromAPI() {
         clearTimeout(timeoutId);
         timeoutId = setTimeout(() => {
         document.querySelector('.loading-scrin').style.display = "flex"
-        }, 2000)
+        }, 500)
         let responseFrom = await fetch(`https://api.ratesapi.io/api/latest?symbols=${from}&base=${to}`);
         let dataFrom = await responseFrom.json();
     
@@ -34,17 +34,20 @@ async function returnValueFromAPI() {
         return { To: dataTo.rates[to], From: dataFrom.rates[from] }
 }
 
+// Функция записывает полученный из API объект в строку
 returnValueFromAPI()
     .then((data) => {
-        console.log(data);
         pInpuntFrom.innerText = ` 1 ${from} = ${data.To.toFixed(4)} ${to}`;
         pInpuntTo.innerText = ` 1 ${to} = ${data.From.toFixed(4)} ${from}`;
         inputToValue.value = ((inputFromValue.value).replace(',','.') * data.To).toFixed(4);
     })
+    .catch(() => {
+        alert ('УПС')
+    })
 
 /** Выделяем выбранную валюту левого столбца */
+// Меняем цвет кнопок и селектора левого столбца и записывает полученные значения в inpunt
 async function setLeftCurr(curr) {
-    console.log(curr)
     leftButtons.forEach((el) => {
         el.style.color = "#C6C6C6";
         el.style.backgroundColor = "#FFFF";
@@ -72,16 +75,18 @@ async function setLeftCurr(curr) {
 }
 
 
-
+// Вызов функции setLeftCurr() для селектора
 selectFrom.addEventListener('change', (event) => {
     setLeftCurr(event.target.value)
 });
 
+// Вызов функции setLeftCurr() для кнопок
 leftButtons.forEach((item) => {
     item.addEventListener('click', () => {
         setLeftCurr(item.innerText)
     });
 
+// Обработка измененных значений в левом input 
     inputFromValue.addEventListener('keyup', checkInput)
 
     function checkInput() {
@@ -100,9 +105,8 @@ leftButtons.forEach((item) => {
 
 
 /** Выделяем выбранную валюту правого столбца */
-
+// Меняем цвет кнопок и селектора правого столбца и записывает полученные значения в inpunt
 async function setRightCurr(curr) {
-    console.log(curr)
     rigthButtons.forEach((el) => {
         el.style.color = "#C6C6C6";
         el.style.backgroundColor = "#FFFF";
@@ -129,11 +133,11 @@ async function setRightCurr(curr) {
     pInpuntTo.innerText = ` 1 ${to} = ${data.From.toFixed(4)} ${from}`;
     inputToValue.value =((inputFromValue.value).replace(',','.') * data.To).toFixed(4);
 }
-
+//  Вызов функции setRightCurr() для селектора
 selectTo.addEventListener('change', (event) => {
     setRightCurr(event.target.value)
 });
-
+// Вызов функции setRightCurr() для кнопок
 rigthButtons.forEach((item) => {
     item.addEventListener('click', () => {
         setRightCurr(item.innerText)
@@ -141,7 +145,7 @@ rigthButtons.forEach((item) => {
 })
 
 inputToValue.addEventListener('keyup', checkInput)
-
+// Обработка измененных значений в правом input 
 function checkInput() {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
@@ -154,6 +158,7 @@ function checkInput() {
     }, 1000)
 }
 
+// Обработка назатия на стрелки
 switchButton.addEventListener('click', async () => {
     let localFrom = from;
     let localTo = to;
