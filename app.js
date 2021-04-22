@@ -99,7 +99,7 @@ leftButtons.forEach((item) => {
                     pInpuntTo.innerText = ` 1 ${to} = ${data.From.toFixed(4)} ${from}`;
                     inputToValue.value = ((inputFromValue.value).replace(',','.') * data.To).toFixed(4);
                 })
-        }, 1000)
+        }, 500)
     }
 })
 
@@ -155,7 +155,7 @@ function checkInput() {
                 pInpuntTo.innerText = ` 1 ${to} = ${data.From.toFixed(4)} ${from}`;
                 inputFromValue.value = ((inputToValue.value).replace(',','.') * data.From).toFixed(4);
             })
-    }, 1000)
+    }, 500)
 }
 
 // Обработка назатия на стрелки
