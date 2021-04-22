@@ -253,3 +253,35 @@ body {
   margin-top: 20px;
   margin-left: 16px;
 }
+
+.loading-scrin {
+  display: none;
+  position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: rgba(0, 0, 0, .6);
+		z-index: 99
+}
+
+.loading-text {
+  background: #ffffff;
+  width: 129px;
+  height: 54px;
+  line-height: 50px;
+  border-radius: 3px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  text-align: center;
+  color: black;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin:  auto
+}
+
+

@@ -17,17 +17,21 @@ let to = 'USD';
 
 
 async function returnValueFromAPI() {
-    if (from === to) {
-        return { From: 1, To: 1 }
-    }
-    let responseFrom = await fetch(`https://api.ratesapi.io/api/latest?symbols=${from}&base=${to}`);
-    let dataFrom = await responseFrom.json();
-
-
-    let responseTo = await fetch(`https://api.ratesapi.io/api/latest?symbols=${to}&base=${from}`);
-    let dataTo = await responseTo.json();
-
-    return { To: dataTo.rates[to], From: dataFrom.rates[from] }
+        if (from === to) {
+            return { From: 1, To: 1 }
+        }
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+        document.querySelector('.loading-scrin').style.display = "flex"
+        }, 2000)
+        let responseFrom = await fetch(`https://api.ratesapi.io/api/latest?symbols=${from}&base=${to}`);
+        let dataFrom = await responseFrom.json();
+    
+        let responseTo = await fetch(`https://api.ratesapi.io/api/latest?symbols=${to}&base=${from}`);
+        clearTimeout(timeoutId);
+        document.querySelector('.loading-scrin').style.display = "none"
+        let dataTo = await responseTo.json();
+        return { To: dataTo.rates[to], From: dataFrom.rates[from] }
 }
 
 returnValueFromAPI()
@@ -35,6 +39,7 @@ returnValueFromAPI()
         console.log(data);
         pInpuntFrom.innerText = ` 1 ${from} = ${data.To.toFixed(4)} ${to}`;
         pInpuntTo.innerText = ` 1 ${to} = ${data.From.toFixed(4)} ${from}`;
+        inputToValue.value = ((inputFromValue.value).replace(',','.') * data.To).toFixed(4);
     })
 
 /** Выделяем выбранную валюту левого столбца */
@@ -61,10 +66,9 @@ async function setLeftCurr(curr) {
     }
     from = curr;
     let data = await returnValueFromAPI()
-    console.log(data);
     pInpuntFrom.innerText = ` 1 ${from} = ${data.To.toFixed(4)} ${to}`;
     pInpuntTo.innerText = ` 1 ${to} = ${data.From.toFixed(4)} ${from}`;
-    inputToValue.value = (inputFromValue.value * data.To).toFixed(4);
+    inputToValue.value = ((inputFromValue.value).replace(',','.') * data.To).toFixed(4);
 }
 
 
@@ -88,7 +92,7 @@ leftButtons.forEach((item) => {
                     console.log(data);
                     pInpuntFrom.innerText = ` 1 ${from} = ${data.To.toFixed(4)} ${to}`;
                     pInpuntTo.innerText = ` 1 ${to} = ${data.From.toFixed(4)} ${from}`;
-                    inputToValue.value = (inputFromValue.value * data.To).toFixed(4);
+                    inputToValue.value = ((inputFromValue.value).replace(',','.') * data.To).toFixed(4);
                 })
         }, 1000)
     }
@@ -121,10 +125,9 @@ async function setRightCurr(curr) {
     to = curr;
 
     let data = await returnValueFromAPI()
-    console.log(data);
     pInpuntFrom.innerText = ` 1 ${from} = ${data.To.toFixed(4)} ${to}`;
     pInpuntTo.innerText = ` 1 ${to} = ${data.From.toFixed(4)} ${from}`;
-    inputToValue.value = (inputFromValue.value * data.To).toFixed(4);
+    inputToValue.value =((inputFromValue.value).replace(',','.') * data.To).toFixed(4);
 }
 
 selectTo.addEventListener('change', (event) => {
@@ -144,10 +147,9 @@ function checkInput() {
     timeoutId = setTimeout(() => {
         returnValueFromAPI()
             .then((data) => {
-                console.log(data);
                 pInpuntFrom.innerText = ` 1 ${from} = ${data.To.toFixed(4)} ${to}`;
                 pInpuntTo.innerText = ` 1 ${to} = ${data.From.toFixed(4)} ${from}`;
-                inputFromValue.value = (inputToValue.value * data.From).toFixed(4);
+                inputFromValue.value = ((inputToValue.value).replace(',','.') * data.From).toFixed(4);
             })
     }, 1000)
 }
@@ -156,7 +158,6 @@ switchButton.addEventListener('click', async () => {
     let localFrom = from;
     let localTo = to;
     await setRightCurr(localFrom);
-    console.log('done right');
     await setLeftCurr(localTo);
-    console.log('done left');
 });
+
