@@ -42,7 +42,7 @@ returnValueFromAPI()
         inputToValue.value = ((inputFromValue.value).replace(',','.') * data.To).toFixed(4);
     })
     .catch(() => {
-        alert ('УПС')
+        alert ('Упс! Что-то пошло не так!')
     })
 
 /** Выделяем выбранную валюту левого столбца */
@@ -165,4 +165,3 @@ switchButton.addEventListener('click', async () => {
     await setRightCurr(localFrom);
     await setLeftCurr(localTo);
 });
-
